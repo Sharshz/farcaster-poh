@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Shield, User, Wallet as WalletIcon, AlertCircle, RefreshCw, Smartphone, Search, Share2 } from 'lucide-react';
+import { Check, Shield, User, Wallet as WalletIcon, AlertCircle, RefreshCw, Smartphone, Search, Share2, UserCircle } from 'lucide-react';
+import Link from 'next/link';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Identity, Avatar, Name, Address, Badge } from '@coinbase/onchainkit/identity';
 import { Wallet, ConnectWallet, ConnectWalletText, WalletDropdown, WalletDropdownDisconnect } from '@coinbase/onchainkit/wallet';
@@ -128,6 +129,13 @@ export default function Home() {
             </h1>
           </div>
           <div className="flex items-center gap-3">
+            <Link 
+              href="/profile"
+              className="p-2 text-zinc-500 hover:text-white transition-colors"
+              title="View Profile"
+            >
+              <UserCircle className="w-6 h-6" />
+            </Link>
             <Wallet>
               <ConnectWallet 
                 className="h-9 px-4 bg-zinc-900 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors flex items-center gap-2"
