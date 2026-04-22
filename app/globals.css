@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-violet-glow: rgba(139, 92, 246, 0.15);
+  --color-glass-bg: rgba(24, 24, 27, 0.8);
+  --color-glass-border: rgba(63, 63, 70, 0.5);
+}
+
+@layer components {
+  .glass-card {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 24px;
+    backdrop-filter: blur(12px);
+  }
+
+  .accent-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--color-violet-glow) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .step-number {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    border: 1px solid #7c3aed;
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: #a78bfa;
+  }
+
+  .btn-violet {
+    background: #7c3aed;
+    color: #fff;
+    transition: background 0.2s;
+  }
+}

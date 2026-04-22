@@ -1,0 +1,10 @@
+{
+  "name": "PoH Verify",
+  "description": "Verify your humanity on Farcaster using OnchainKit and Basenames.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
