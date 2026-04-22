@@ -103,7 +103,26 @@ export default function Home() {
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-full">
+            <Wallet>
+              <ConnectWallet className="h-9 px-3 bg-zinc-900 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
+                <Avatar className="h-5 w-5 mr-2" />
+                <Name className="text-[10px] font-bold text-zinc-100 uppercase tracking-widest" />
+              </ConnectWallet>
+              <WalletDropdown className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden mt-2">
+                <Identity className="px-5 pt-4 pb-3 border-b border-zinc-900 bg-zinc-900/30" hasCopyAddressOnClick>
+                  <Avatar className="h-12 w-12 border-2 border-zinc-950 shadow-lg" />
+                  <div className="flex flex-col">
+                    <Name className="text-lg font-bold" />
+                    <Address className="text-xs text-zinc-500" />
+                  </div>
+                </Identity>
+                <div className="p-2">
+                  <WalletDropdownDisconnect className="w-full rounded-lg hover:bg-red-500/10 text-red-400 text-xs font-bold py-2.5 transition-colors" />
+                </div>
+              </WalletDropdown>
+            </Wallet>
+
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-full h-9">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-[10px] font-medium text-zinc-300 uppercase tracking-wider">
                 {context?.client?.clientName || 'Mainnet'} Connected
