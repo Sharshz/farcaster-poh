@@ -23,12 +23,21 @@ export default function Home() {
 
   useEffect(() => {
     const init = async () => {
-      const context = await sdk.context;
-      setContext(context);
-      sdk.actions.ready();
-      setIsReady(true);
+      try {
+        // Use a timeout for the context to ensure the app renders even if Farcaster SDK environment is slow or missing
+        const contextPromise = sdk.context;
+        const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(null), 3000));
+        const context = await Promise.race([contextPromise, timeoutPromise]);
+        
+        setContext(context);
+        sdk.actions.ready();
+      } catch (error) {
+        console.error('Farcaster SDK initialization error:', error);
+      } finally {
+        setIsReady(true);
+      }
     };
-    if (sdk) {
+    if (typeof window !== 'undefined') {
       init();
     }
   }, []);
