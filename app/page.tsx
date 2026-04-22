@@ -3,10 +3,10 @@
 import { useEffect, useState, useCallback } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Shield, User, Wallet, AlertCircle, RefreshCw, Smartphone, Search } from 'lucide-react';
+import { Check, Shield, User, Wallet as WalletIcon, AlertCircle, RefreshCw, Smartphone, Search } from 'lucide-react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Identity, Avatar, Name, Address, Badge } from '@coinbase/onchainkit/identity';
-import { ConnectWallet, Wallet as WalletComponent, ConnectWalletText, WalletDropdown, WalletDropdownDisconnect } from '@coinbase/onchainkit/wallet';
+import { Wallet, ConnectWallet, ConnectWalletText, WalletDropdown, WalletDropdownDisconnect } from '@coinbase/onchainkit/wallet';
 
 export default function Home() {
   const [isReady, setIsReady] = useState(false);
@@ -249,30 +249,38 @@ export default function Home() {
                         </button>
 
                         {isConnected ? (
-                          <div className="mt-4 p-4 glass-card bg-zinc-900/20 border-zinc-800/50 flex flex-col gap-3">
-                            <span className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">Linked Identity</span>
-                            <WalletComponent>
-                              <ConnectWallet className="bg-transparent hover:bg-zinc-800/30 w-full justify-between p-0 border-none h-auto">
+                          <div className="mt-6 p-5 glass-card bg-zinc-900/40 border-violet-500/20 flex flex-col gap-4">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] text-violet-400 font-bold uppercase tracking-widest">Active Wallet Connected</span>
+                              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+                            </div>
+                            
+                            <Wallet>
+                              <ConnectWallet className="bg-zinc-800/50 hover:bg-zinc-800 w-full justify-between p-3 border border-zinc-700/50 h-auto rounded-xl">
                                 <div className="flex items-center gap-3">
-                                  <Avatar className="h-10 w-10 border border-violet-500/30" />
-                                  <div className="flex flex-col items-start">
+                                  <Avatar className="h-10 w-10 border-2 border-zinc-900" />
+                                  <div className="flex flex-col items-start translate-y-[1px]">
                                     <Name className="text-zinc-100 font-bold text-sm" />
-                                    <Address className="text-zinc-500 text-[10px] font-mono" />
+                                    <Address className="text-zinc-500 text-[11px] font-mono leading-none mt-1" />
                                   </div>
                                 </div>
-                                <div className="p-2 rounded-lg bg-zinc-800 group-hover:bg-zinc-700 transition-colors">
-                                  <Wallet className="w-4 h-4 text-zinc-400" />
+                                <div className="p-2 rounded-lg bg-zinc-900/50">
+                                  <WalletIcon className="w-4 h-4 text-violet-400" />
                                 </div>
                               </ConnectWallet>
-                              <WalletDropdown className="bg-zinc-950 border border-zinc-800">
-                                <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-                                  <Avatar />
-                                  <Name />
-                                  <Address />
+                              <WalletDropdown className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden mt-2">
+                                <Identity className="px-5 pt-4 pb-3 border-b border-zinc-900 bg-zinc-900/30" hasCopyAddressOnClick>
+                                  <Avatar className="h-12 w-12 border-2 border-zinc-950 shadow-lg" />
+                                  <div className="flex flex-col">
+                                    <Name className="text-lg font-bold" />
+                                    <Address className="text-xs text-zinc-500" />
+                                  </div>
                                 </Identity>
-                                <WalletDropdownDisconnect className="hover:bg-red-500/10 text-red-400" />
+                                <div className="p-2">
+                                  <WalletDropdownDisconnect className="w-full rounded-lg hover:bg-red-500/10 text-red-400 text-xs font-bold py-2.5 transition-colors" />
+                                </div>
                               </WalletDropdown>
-                            </WalletComponent>
+                            </Wallet>
                           </div>
                         ) : (
                           <p className="text-[10px] text-amber-500/80 font-mono text-center uppercase tracking-wider animate-pulse pt-2">
