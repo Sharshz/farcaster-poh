@@ -113,7 +113,10 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-3">
             <Wallet>
-              <ConnectWallet className="h-9 px-4 bg-zinc-900 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors flex items-center gap-2">
+              <ConnectWallet 
+                className="h-9 px-4 bg-zinc-900 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors flex items-center gap-2"
+                title="Connect your wallet to proceed"
+              >
                 <Avatar className="h-5 w-5 shrink-0" />
                 <Name className="text-[10px] font-bold text-zinc-100 uppercase tracking-widest" />
               </ConnectWallet>
@@ -256,7 +259,7 @@ export default function Home() {
                        <p className="text-xs text-zinc-500 mb-6">Scan presence & link wallet.</p>
                        
                        <div className="flex flex-col gap-3">
-                        <ConnectWallet>
+                        <ConnectWallet title="Connect your wallet to proceed with the humanity verification">
                           <ConnectWalletText 
                             className="w-full bg-zinc-900 border border-zinc-800 text-white font-bold h-10 px-4 rounded-xl hover:bg-zinc-800 transition-colors text-xs" 
                             title="Connect your wallet to proceed with the humanity verification"
