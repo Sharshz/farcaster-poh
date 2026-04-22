@@ -102,13 +102,13 @@ export default function Home() {
               PoH.Verify <span className="text-zinc-500 font-normal lowercase ml-1">v1.0</span>
             </h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Wallet>
-              <ConnectWallet className="h-9 px-3 bg-zinc-900 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors">
-                <Avatar className="h-5 w-5 mr-2" />
+              <ConnectWallet className="h-9 px-4 bg-zinc-900 border border-zinc-800 rounded-full hover:bg-zinc-800 transition-colors flex items-center gap-2">
+                <Avatar className="h-5 w-5 shrink-0" />
                 <Name className="text-[10px] font-bold text-zinc-100 uppercase tracking-widest" />
               </ConnectWallet>
-              <WalletDropdown className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden mt-2">
+              <WalletDropdown className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden mt-2 z-50">
                 <Identity className="px-5 pt-4 pb-3 border-b border-zinc-900 bg-zinc-900/30" hasCopyAddressOnClick>
                   <Avatar className="h-12 w-12 border-2 border-zinc-950 shadow-lg" />
                   <div className="flex flex-col">
@@ -116,7 +116,7 @@ export default function Home() {
                     <Address className="text-xs text-zinc-500" />
                   </div>
                 </Identity>
-                <div className="p-2">
+                <div className="p-2 space-y-1">
                   <WalletDropdownDisconnect className="w-full rounded-lg hover:bg-red-500/10 text-red-400 text-xs font-bold py-2.5 transition-colors" />
                 </div>
               </WalletDropdown>
