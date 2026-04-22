@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Shield, User, Wallet as WalletIcon, AlertCircle, RefreshCw, Smartphone, Search } from 'lucide-react';
+import { Check, Shield, User, Wallet as WalletIcon, AlertCircle, RefreshCw, Smartphone, Search, Share2 } from 'lucide-react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Identity, Avatar, Name, Address, Badge } from '@coinbase/onchainkit/identity';
 import { Wallet, ConnectWallet, ConnectWalletText, WalletDropdown, WalletDropdownDisconnect } from '@coinbase/onchainkit/wallet';
@@ -91,6 +91,22 @@ export default function Home() {
     });
     setIsVerifying(false);
   }, [context, isConnected, address]);
+
+  const handleShare = useCallback(() => {
+    const text = verificationResult?.success 
+      ? "I just verified my humanity on PoH.Verify! 🛡️✨ Check your status on Base." 
+      : "Checking my humanity score on PoH.Verify. Are you real?";
+    
+    // Use warpcast compose URL
+    const shareUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(process.env.NEXT_PUBLIC_APP_URL || window.location.origin)}`;
+    
+    // Use Farcaster SDK to open URL if available, fallback to window.open
+    if (sdk && sdk.actions && (sdk.actions as any).openUrl) {
+      (sdk.actions as any).openUrl(shareUrl);
+    } else {
+      window.open(shareUrl, '_blank');
+    }
+  }, [verificationResult]);
 
   if (!isReady) return null;
 
@@ -403,14 +419,24 @@ export default function Home() {
                   <div className="flex gap-4">
                     <button
                       onClick={() => setVerificationResult(null)}
-                      className="flex-1 py-4 bg-zinc-900 border border-zinc-800 rounded-2xl text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+                      className="flex-1 py-4 bg-zinc-900 border border-zinc-800 rounded-2xl text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
                     >
-                      Restart Scan
+                      <RefreshCw className="w-3 h-3" />
+                      Restart
                     </button>
                     {verificationResult.success && (
-                      <button className="flex-1 py-4 bg-violet-600 rounded-2xl text-xs font-bold uppercase tracking-widest text-white hover:bg-violet-500 shadow-lg shadow-violet-600/20 transition-all">
-                        Mint Humanity ID
-                      </button>
+                      <>
+                        <button 
+                          onClick={handleShare}
+                          className="flex-1 py-4 bg-zinc-900 border border-zinc-700/50 rounded-2xl text-xs font-bold uppercase tracking-widest text-white hover:bg-zinc-800 hover:border-zinc-500 transition-all flex items-center justify-center gap-2"
+                        >
+                          <Share2 className="w-3 h-3" />
+                          Share
+                        </button>
+                        <button className="flex-1 py-4 bg-violet-600 rounded-2xl text-xs font-bold uppercase tracking-widest text-white hover:bg-violet-500 shadow-lg shadow-violet-600/20 transition-all">
+                          Mint ID
+                        </button>
+                      </>
                     )}
                   </div>
                 </motion.div>
