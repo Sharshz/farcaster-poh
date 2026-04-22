@@ -229,7 +229,10 @@ export default function Home() {
                        
                        <div className="flex flex-col gap-3">
                         <ConnectWallet>
-                          <ConnectWalletText className="w-full bg-zinc-900 border border-zinc-800 text-white font-bold h-10 px-4 rounded-xl hover:bg-zinc-800 transition-colors text-xs" />
+                          <ConnectWalletText 
+                            className="w-full bg-zinc-900 border border-zinc-800 text-white font-bold h-10 px-4 rounded-xl hover:bg-zinc-800 transition-colors text-xs" 
+                            title="Connect your wallet to proceed with the humanity verification"
+                          />
                         </ConnectWallet>
 
                         <button 
