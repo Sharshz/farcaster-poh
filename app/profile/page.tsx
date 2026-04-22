@@ -10,6 +10,7 @@ export default function Profile() {
   const [isReady, setIsReady] = useState(false);
   const [context, setContext] = useState<any>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [profile, setProfile] = useState({
     displayName: '',
     username: '',
@@ -39,8 +40,11 @@ export default function Profile() {
     init();
   }, []);
 
-  const handleSave = () => {
-    // In a production app, this would hit an API to update app-specific metadata
+  const handleSave = async () => {
+    setIsSaving(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 800));
+    setIsSaving(false);
     setIsEditing(false);
   };
 
@@ -109,7 +113,7 @@ export default function Profile() {
 
             {isEditing ? (
               <div className="space-y-5">
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Display Name</label>
                     <input 
@@ -121,30 +125,64 @@ export default function Profile() {
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Profile Bio</label>
-                    <textarea 
-                      value={profile.bio}
-                      onChange={(e) => setProfile({...profile, bio: e.target.value})}
-                      rows={3}
-                      className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-violet-500/50 transition-all placeholder:text-zinc-700 resize-none leading-relaxed"
-                      placeholder="Tell us about yourself..."
-                    />
+                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Username</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 text-sm">@</span>
+                      <input 
+                        type="text"
+                        value={profile.username}
+                        onChange={(e) => setProfile({...profile, username: e.target.value})}
+                        className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl pl-8 pr-4 py-3 text-sm font-medium focus:outline-none focus:border-violet-500/50 transition-all placeholder:text-zinc-700 font-mono"
+                        placeholder="username"
+                      />
+                    </div>
                   </div>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Profile Picture URL</label>
+                  <input 
+                    type="text"
+                    value={profile.pfpUrl}
+                    onChange={(e) => setProfile({...profile, pfpUrl: e.target.value})}
+                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-violet-500/50 transition-all placeholder:text-zinc-700"
+                    placeholder="https://..."
+                  />
+                  <p className="text-[9px] text-zinc-600 mt-1 uppercase tracking-tighter">Enter a URL for your profile image (JPG, PNG, WebP)</p>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Profile Bio</label>
+                  <textarea 
+                    value={profile.bio}
+                    onChange={(e) => setProfile({...profile, bio: e.target.value})}
+                    rows={3}
+                    className="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-violet-500/50 transition-all placeholder:text-zinc-700 resize-none leading-relaxed"
+                    placeholder="Tell us about yourself..."
+                  />
                 </div>
 
                 <div className="flex gap-3 pt-2">
                   <button 
                     onClick={() => setIsEditing(false)}
-                    className="flex-1 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-zinc-300 transition-all"
+                    disabled={isSaving}
+                    className="flex-1 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-zinc-300 transition-all disabled:opacity-50"
                   >
                     Cancel
                   </button>
                   <button 
                     onClick={handleSave}
-                    className="flex-1 py-3 bg-violet-600 rounded-xl text-[10px] font-bold uppercase tracking-widest text-white shadow-lg shadow-violet-600/20 hover:bg-violet-500 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                    disabled={isSaving}
+                    className="flex-1 py-3 bg-violet-600 rounded-xl text-[10px] font-bold uppercase tracking-widest text-white shadow-lg shadow-violet-600/20 hover:bg-violet-500 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                   >
-                    <Save className="w-3 h-3" />
-                    Save Changes
+                    {isSaving ? (
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <Save className="w-3 h-3" />
+                        Save Changes
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
