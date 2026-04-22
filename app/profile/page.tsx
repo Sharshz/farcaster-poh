@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import { motion } from 'motion/react';
-import { User, Edit3, Save, ArrowLeft, Camera, Shield } from 'lucide-react';
+import { User, Edit3, Save, ArrowLeft, Camera, Shield, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Profile() {
@@ -11,6 +11,7 @@ export default function Profile() {
   const [context, setContext] = useState<any>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isPreparingEdit, setIsPreparingEdit] = useState(false);
   const [profile, setProfile] = useState({
     displayName: '',
     username: '',
@@ -46,6 +47,14 @@ export default function Profile() {
     await new Promise(resolve => setTimeout(resolve, 800));
     setIsSaving(false);
     setIsEditing(false);
+  };
+
+  const handleEdit = async () => {
+    setIsPreparingEdit(true);
+    // Simulate prep time for the form (e.g. fetching additional metadata)
+    await new Promise(resolve => setTimeout(resolve, 600));
+    setIsEditing(true);
+    setIsPreparingEdit(false);
   };
 
   if (!isReady) return null;
@@ -102,11 +111,16 @@ export default function Profile() {
 
               {!isEditing && (
                 <button 
-                  onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-[10px] font-bold uppercase tracking-wider text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all flex items-center gap-2"
+                  onClick={handleEdit}
+                  disabled={isPreparingEdit}
+                  className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-[10px] font-bold uppercase tracking-wider text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all flex items-center gap-2 disabled:opacity-70"
                 >
-                  <Edit3 className="w-3 h-3" />
-                  Edit Profile
+                  {isPreparingEdit ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Edit3 className="w-3 h-3" />
+                  )}
+                  {isPreparingEdit ? 'Preparing...' : 'Edit Profile'}
                 </button>
               )}
             </div>
